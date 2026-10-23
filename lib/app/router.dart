@@ -10,6 +10,8 @@ import '../features/akun/ui/masuk_page.dart';
 import '../features/akun/ui/memuat_page.dart';
 import '../features/akun/ui/verifikasi_page.dart';
 import '../features/beranda/ui/beranda_page.dart';
+import '../features/notifikasi/ui/notifikasi_page.dart';
+import '../features/profil/ui/profil_page.dart';
 import '../widgets/app_shell.dart';
 
 /// Rute utama. Pengalihan otomatis mengikuti status Sesi:
@@ -39,6 +41,7 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(path: '/daftar', builder: (_, __) => const DaftarPage()),
       GoRoute(path: '/lupa-sandi', builder: (_, __) => const LupaSandiPage()),
       GoRoute(path: '/verifikasi', builder: (_, __) => const VerifikasiPage()),
+      GoRoute(path: '/notifikasi', builder: (_, __) => const NotifikasiPage()),
       // Tautan undangan sesi: guyub.test/j/K7Q2PX
       GoRoute(path: '/j/:kode', redirect: (_, s) => '/tim?kode=${s.pathParameters['kode']}'),
       ShellRoute(
@@ -48,7 +51,7 @@ final routerProvider = Provider<GoRouter>((ref) {
           GoRoute(path: '/tim', builder: (_, __) => const _Placeholder('Cari Tim', 'F3')),
           GoRoute(path: '/pasar', builder: (_, __) => const _Placeholder('Pasar Mahasiswa', 'F5')),
           GoRoute(path: '/ruang', builder: (_, __) => const _Placeholder('Booking Ruang', 'F4')),
-          GoRoute(path: '/profil', builder: (_, __) => const _Placeholder('Profil', 'F6')),
+          GoRoute(path: '/profil', builder: (_, __) => const ProfilPage()),
         ],
       ),
     ],

@@ -3,6 +3,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:guyub_app/app/theme.dart';
 import 'package:guyub_app/core/sesi.dart';
+import 'package:guyub_app/features/beranda/data/beranda_repository.dart';
+import 'package:guyub_app/features/notifikasi/data/notifikasi_repository.dart';
 import 'package:guyub_app/widgets/guyub_button.dart';
 import 'package:guyub_app/widgets/slot_waktu.dart';
 import 'package:guyub_app/widgets/status_badge.dart';
@@ -52,5 +54,36 @@ void main() {
   test('Akun baru belum terverifikasi', () {
     final p = Pengguna.fromJson({'id': 1, 'name': 'Baru', 'email': 'baru@mhs.kampus.ac.id', 'email_verified_at': null, 'peran': []});
     expect(p.terverifikasi, isFalse);
+  });
+
+  test('Beranda membaca respons GET /beranda', () {
+    final d = BerandaData.fromJson({
+      'sapaan': 'Selamat pagi, Rina',
+      'notifikasi_belum_dibaca': 3,
+      'booking_berikutnya': {'id': 7, 'kode': 'BK-20261023-0001', 'status': 'disetujui', 'ruang': 'B-201', 'gedung': 'Gedung B', 'mulai': '2026-10-24T09:00:00+07:00', 'selesai': '2026-10-24T11:00:00+07:00'},
+      'tim': {
+        'sesi_terbuka': [{'id': 2, 'judul': 'Tugas besar', 'mata_kuliah': 'RPL A', 'batas_join': '2026-10-25T23:59:00+07:00', 'sudah_bergabung': false}],
+        'kelompok_terbaru': null,
+      },
+      'pasar': {
+        'pesanan_aktif': 1,
+        'toko': {'nama': 'Rina Print', 'saldo': 125000, 'perlu_diproses': 2},
+        'produk_baru': [
+          {'slug': 'kaos', 'nama': 'Kaos', 'tipe': 'fisik', 'harga': 85000, 'stok': 4, 'habis': false, 'foto': [], 'toko': {'slug': 'x', 'nama': 'Toko X'}},
+        ],
+      },
+    });
+    expect(d.belumDibaca, 3);
+    expect(d.booking!.ruang, 'B-201');
+    expect(d.kelompok, isNull);
+    expect(d.sesiTerbuka.single.sudahBergabung, isFalse);
+    expect(d.toko!.perluDiproses, 2);
+    expect(d.produkBaru.single.fotoUrl, isNull);
+  });
+
+  test('Notifikasi membaca item GET /notifikasi', () {
+    final n = Notifikasi.fromJson({'id': 5, 'tipe': 'booking_disetujui', 'kategori': 'booking', 'judul': 'Booking disetujui', 'isi': 'B-201', 'link': null, 'dibaca': false, 'waktu': '2026-10-23T08:00:00+07:00'});
+    expect(n.kategori, 'booking');
+    expect(n.dibaca, isFalse);
   });
 }
