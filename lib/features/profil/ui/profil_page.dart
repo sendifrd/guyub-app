@@ -121,7 +121,7 @@ class ProfilPage extends ConsumerWidget {
             onPressed: () => _keluar(context, ref),
           ),
           const SizedBox(height: 12),
-          Center(child: Text('Guyub v0.2 · F2', style: GuyubText.secondary.copyWith(color: GuyubColors.inkFaint))),
+          Center(child: Text('Guyub v0.3 · F3', style: GuyubText.secondary.copyWith(color: GuyubColors.inkFaint))),
         ]),
       ),
     );

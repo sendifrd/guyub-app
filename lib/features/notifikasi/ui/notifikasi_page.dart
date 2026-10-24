@@ -36,6 +36,12 @@ class NotifikasiPage extends ConsumerWidget {
       }
     }
     if (!context.mounted) return;
+    // Tautan dari server yang sudah ada layarnya di aplikasi dibuka langsung.
+    final link = n.link;
+    if (link != null && RegExp(r'^/tim/sesi/\d+$').hasMatch(link)) {
+      context.push(link);
+      return;
+    }
     final tujuan = switch (n.kategori) {
       'kelompok' => '/tim',
       'booking' => '/ruang',

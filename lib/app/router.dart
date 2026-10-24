@@ -12,6 +12,8 @@ import '../features/akun/ui/verifikasi_page.dart';
 import '../features/beranda/ui/beranda_page.dart';
 import '../features/notifikasi/ui/notifikasi_page.dart';
 import '../features/profil/ui/profil_page.dart';
+import '../features/tim/ui/cari_tim_page.dart';
+import '../features/tim/ui/hasil_kelompok_page.dart';
 import '../widgets/app_shell.dart';
 
 /// Rute utama. Pengalihan otomatis mengikuti status Sesi:
@@ -48,7 +50,16 @@ final routerProvider = Provider<GoRouter>((ref) {
         builder: (context, state, child) => AppShell(location: state.uri.path, child: child),
         routes: [
           GoRoute(path: '/', builder: (_, __) => const BerandaPage()),
-          GoRoute(path: '/tim', builder: (_, __) => const _Placeholder('Cari Tim', 'F3')),
+          GoRoute(
+            path: '/tim',
+            builder: (_, s) {
+              final kode = s.uri.queryParameters['kode'];
+              return CariTimPage(key: ValueKey(kode), kodeAwal: kode);
+            },
+            routes: [
+              GoRoute(path: 'sesi/:id', builder: (_, s) => HasilKelompokPage(sesiId: int.parse(s.pathParameters['id']!))),
+            ],
+          ),
           GoRoute(path: '/pasar', builder: (_, __) => const _Placeholder('Pasar Mahasiswa', 'F5')),
           GoRoute(path: '/ruang', builder: (_, __) => const _Placeholder('Booking Ruang', 'F4')),
           GoRoute(path: '/profil', builder: (_, __) => const ProfilPage()),

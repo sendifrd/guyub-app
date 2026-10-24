@@ -157,7 +157,7 @@ class _KartuKelompok extends StatelessWidget {
     final k = data.kelompok;
     if (k != null) {
       return GuyubCard(
-        onTap: () => context.go('/tim'),
+        onTap: () => context.push('/tim/sesi/${k.sesiId}'),
         child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Expanded(
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -179,7 +179,13 @@ class _KartuKelompok extends StatelessWidget {
     if (data.sesiTerbuka.isNotEmpty) {
       final s = data.sesiTerbuka.first;
       return GuyubCard(
-        onTap: () => context.go('/tim'),
+        onTap: () {
+          if (s.sudahBergabung) {
+            context.push('/tim/sesi/${s.id}');
+          } else {
+            context.go('/tim');
+          }
+        },
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Expanded(child: Text(s.judul, style: GuyubText.cardTitle)),

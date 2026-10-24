@@ -5,6 +5,7 @@ import 'package:guyub_app/app/theme.dart';
 import 'package:guyub_app/core/sesi.dart';
 import 'package:guyub_app/features/beranda/data/beranda_repository.dart';
 import 'package:guyub_app/features/notifikasi/data/notifikasi_repository.dart';
+import 'package:guyub_app/features/tim/data/tim_repository.dart';
 import 'package:guyub_app/widgets/guyub_button.dart';
 import 'package:guyub_app/widgets/slot_waktu.dart';
 import 'package:guyub_app/widgets/status_badge.dart';
@@ -85,5 +86,34 @@ void main() {
     final n = Notifikasi.fromJson({'id': 5, 'tipe': 'booking_disetujui', 'kategori': 'booking', 'judul': 'Booking disetujui', 'isi': 'B-201', 'link': null, 'dibaca': false, 'waktu': '2026-10-23T08:00:00+07:00'});
     expect(n.kategori, 'booking');
     expect(n.dibaca, isFalse);
+  });
+
+  test('Sesi saya membaca GET /tim/sesi', () {
+    final s = SesiSaya.fromJson({
+      'id': 3, 'judul': 'Tugas Besar ERD', 'mata_kuliah': {'kode': 'IF2103', 'nama': 'Basis Data', 'kelas': 'B'},
+      'status': 'dikunci', 'batas_join': '2026-10-15T10:00:00+07:00', 'status_saya': 'tepat_waktu',
+      'kelompok_saya': {'nomor': 3, 'nama': 'Kelompok 3'},
+    });
+    expect(s.dikunci, isTrue);
+    expect(s.kelompokNomor, 3);
+    expect(s.matkul.label, 'IF2103 Basis Data · Kelas B');
+  });
+
+  test('Detail sesi dikunci memuat kelompok saya dan bukti', () {
+    final d = DetailSesi.fromJson({
+      'id': 3, 'judul': 'Tugas Besar ERD', 'mata_kuliah': {'kode': 'IF2103', 'nama': 'Basis Data', 'kelas': 'B'},
+      'status': 'dikunci', 'mode': 'ukuran', 'nilai': 5, 'batas_join': '2026-10-15T10:00:00+07:00',
+      'sidik_jari': '6240a5cd00a38060', 'jumlah_peserta': 23, 'status_saya': 'tepat_waktu',
+      'dikunci_pada': '2026-10-15T10:00:02+07:00', 'kelompok_saya_id': 12,
+      'kelompok': [
+        {'id': 11, 'nomor': 1, 'nama': 'Kelompok 1', 'anggota': [{'nama': 'Dimas', 'nim': '2410512011', 'prodi': 'TI', 'no_whatsapp': null}]},
+        {'id': 12, 'nomor': 2, 'nama': 'Tim Relasi', 'anggota': [{'nama': 'Rina', 'nim': '2410512034', 'prodi': 'TI', 'no_whatsapp': '0812'}]},
+      ],
+      'bukti': {'seed': 58210377, 'kode': 'K7Q2PX', 'sidik_jari': '6240a5cd00a38060', 'cocok': true, 'rumus': 'r', 'algoritma': 'a', 'riwayat': []},
+    });
+    expect(d.kelompokSaya!.nama, 'Tim Relasi');
+    expect(d.aturan, 'Kelompok 5 orang');
+    expect(d.bukti!.seed, '58210377');
+    expect(d.bukti!.cocok, isTrue);
   });
 }
