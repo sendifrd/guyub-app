@@ -92,6 +92,7 @@ class ProfilPage extends ConsumerWidget {
             child: Column(children: [
               _Menu(ikon: Icons.groups_outlined, label: 'Kelompok saya', onTap: () => context.go('/tim')),
               _Menu(ikon: Icons.calendar_today_outlined, label: 'Booking saya', onTap: () => context.go('/ruang')),
+              if (p.mengelolaKelas) _Menu(ikon: Icons.shuffle_rounded, label: 'Kelola sesi kelompok', onTap: () => context.push('/tim/kelola')),
               if (p.mengelolaKelas) _Menu(ikon: Icons.event_repeat_outlined, label: 'Kuliah pengganti', onTap: () => _segera(context, 'Kuliah pengganti')),
               _Menu(ikon: Icons.receipt_long_outlined, label: 'Pesanan saya', onTap: () => _segera(context, 'Pesanan')),
               _Menu(
@@ -121,7 +122,7 @@ class ProfilPage extends ConsumerWidget {
             onPressed: () => _keluar(context, ref),
           ),
           const SizedBox(height: 12),
-          Center(child: Text('Guyub v0.3 · F3', style: GuyubText.secondary.copyWith(color: GuyubColors.inkFaint))),
+          Center(child: Text('Guyub v0.3 · F3b', style: GuyubText.secondary.copyWith(color: GuyubColors.inkFaint))),
         ]),
       ),
     );

@@ -14,6 +14,10 @@ import '../features/notifikasi/ui/notifikasi_page.dart';
 import '../features/profil/ui/profil_page.dart';
 import '../features/tim/ui/cari_tim_page.dart';
 import '../features/tim/ui/hasil_kelompok_page.dart';
+import '../features/tim/ui/kelola/buat_sesi_page.dart';
+import '../features/tim/ui/kelola/daftar_sesi_page.dart';
+import '../features/tim/ui/kelola/detail_sesi_page.dart';
+import '../features/tim/ui/kelola/terlambat_page.dart';
 import '../widgets/app_shell.dart';
 
 /// Rute utama. Pengalihan otomatis mengikuti status Sesi:
@@ -58,6 +62,21 @@ final routerProvider = Provider<GoRouter>((ref) {
             },
             routes: [
               GoRoute(path: 'sesi/:id', builder: (_, s) => HasilKelompokPage(sesiId: int.parse(s.pathParameters['id']!))),
+              // Dosen pengampu dan ketua kelas (K1–K7)
+              GoRoute(
+                path: 'kelola',
+                builder: (_, __) => const DaftarSesiKelolaPage(),
+                routes: [
+                  GoRoute(path: 'baru', builder: (_, __) => const BuatSesiPage()),
+                  GoRoute(
+                    path: ':id',
+                    builder: (_, s) => DetailSesiKelolaPage(sesiId: int.parse(s.pathParameters['id']!)),
+                    routes: [
+                      GoRoute(path: 'terlambat', builder: (_, s) => TerlambatPage(sesiId: int.parse(s.pathParameters['id']!))),
+                    ],
+                  ),
+                ],
+              ),
             ],
           ),
           GoRoute(path: '/pasar', builder: (_, __) => const _Placeholder('Pasar Mahasiswa', 'F5')),

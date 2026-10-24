@@ -88,8 +88,7 @@ class _CariTimPageState extends ConsumerState<CariTimPage> {
         actions: [
           if (p?.mengelolaKelas ?? false)
             TextButton(
-              onPressed: () => ScaffoldMessenger.of(context)
-                  .showSnackBar(const SnackBar(content: Text('Kelola sesi untuk dosen dan ketua kelas dibuat di tahap F3b.'))),
+              onPressed: () => context.push('/tim/kelola'),
               child: Text('Kelola sesi', style: GuyubText.fieldLabel.copyWith(color: GuyubColors.primary)),
             ),
         ],

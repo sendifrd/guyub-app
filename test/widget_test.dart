@@ -5,6 +5,7 @@ import 'package:guyub_app/app/theme.dart';
 import 'package:guyub_app/core/sesi.dart';
 import 'package:guyub_app/features/beranda/data/beranda_repository.dart';
 import 'package:guyub_app/features/notifikasi/data/notifikasi_repository.dart';
+import 'package:guyub_app/features/tim/data/kelola_repository.dart';
 import 'package:guyub_app/features/tim/data/tim_repository.dart';
 import 'package:guyub_app/widgets/guyub_button.dart';
 import 'package:guyub_app/widgets/slot_waktu.dart';
@@ -115,5 +116,24 @@ void main() {
     expect(d.aturan, 'Kelompok 5 orang');
     expect(d.bukti!.seed, '58210377');
     expect(d.bukti!.cocok, isTrue);
+  });
+
+  test('Detail kelola membaca progres dan kelompok', () {
+    final d = DetailKelola.fromJson({
+      'id': 3, 'judul': 'Tugas Besar ERD', 'status': 'dikunci',
+      'mata_kuliah': {'id': 9, 'kode': 'IF2103', 'nama': 'Basis Data', 'kelas': 'B'},
+      'mode': 'ukuran', 'nilai': 5, 'kode': 'K7Q2PX', 'tautan': 'http://guyub.test/j/K7Q2PX',
+      'batas_join': '2026-10-15T10:00:00+07:00', 'sidik_jari': 'abc', 'progres': {'bergabung': 22, 'total': 23},
+      'pratinjau': [6, 6, 5, 5], 'terlambat_menunggu': 1, 'pengingat_terakhir': null, 'bisa_acak_ulang': false,
+      'dikunci_pada': '2026-10-15T10:00:02+07:00', 'seed': '58210377', 'reshuffle_count': 0,
+      'kelompok': [
+        {'id': 1, 'nomor': 1, 'nama': 'Kelompok 1', 'anggota': [{'id': 5, 'nama': 'Rina', 'nim': '1', 'cara': 'acak'}, {'id': 6, 'nama': 'Rizky', 'nim': '2', 'cara': 'terlambat'}]},
+      ],
+    });
+    expect(d.courseId, 9);
+    expect(d.jumlahAnggota, 2);
+    expect(d.pratinjau, [6, 6, 5, 5]);
+    expect(d.belumBergabung, isEmpty);
+    expect(d.kelompok.first.anggota.last.cara, 'terlambat');
   });
 }

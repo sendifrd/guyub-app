@@ -42,6 +42,11 @@ class NotifikasiPage extends ConsumerWidget {
       context.push(link);
       return;
     }
+    final terlambat = link == null ? null : RegExp(r'^/kelola/sesi/(\d+)/terlambat$').firstMatch(link);
+    if (terlambat != null) {
+      context.push('/tim/kelola/${terlambat.group(1)}/terlambat');
+      return;
+    }
     final tujuan = switch (n.kategori) {
       'kelompok' => '/tim',
       'booking' => '/ruang',

@@ -43,7 +43,7 @@ class BerandaPage extends ConsumerWidget {
             adaBaru: (beranda.valueOrNull?.belumDibaca ?? 0) > 0,
             onTap: () async {
               await context.push('/notifikasi');
-              ref.invalidate(berandaProvider);
+              if (context.mounted) ref.invalidate(berandaProvider);
             },
           ),
         ]),
